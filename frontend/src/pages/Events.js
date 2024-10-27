@@ -21,7 +21,9 @@ export async function loader() {
 
   if (!response.ok) {
     // return { isErroe: true, message: "Could not fatch events." };
-    throw { message: "Could not fatch events." };
+    throw new Response(JSON.stringify({ message: "Could not fatch events." }), {
+      status: 500,
+    });
   } else {
     return response;
   }
