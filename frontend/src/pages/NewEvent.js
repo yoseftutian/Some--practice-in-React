@@ -7,7 +7,15 @@ export default function NewEventPage() {
 
 export async function action({ request, params }) {
   const data = await request.formData();
-
+  {
+    data && data.error && (
+      <ul>
+        {Object.values(data.errors).map((err) => (
+          <li key={err}>{err}</li>
+        ))}
+      </ul>
+    );
+  }
   const eventData = {
     title: data.get("title"),
     image: data.get("image"),
@@ -22,6 +30,9 @@ export async function action({ request, params }) {
     body: JSON.stringify(eventData),
   });
 
+  if (response.status === 422) {
+    return response;
+  }
   if (!response.ok) {
     throw json({ message: "Could not save event." }, { status: 500 });
   }
