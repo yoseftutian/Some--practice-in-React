@@ -38,8 +38,15 @@ export async function action({ request }) {
   }
 
   const resData = await response.json();
-  const token = resData.token;
+  console.log("Response data:", resData); // בדוק את התשובה מהשרת
 
+  const token = resData.token;
+  if (!token) {
+    console.error("Token is missing from response.");
+    throw json({ message: "No token received." }, { status: 500 });
+  }
   localStorage.setItem("token", token);
+  console.log("Token saved in localStorage:", localStorage.getItem("token"));
+
   return redirect("/");
 }
