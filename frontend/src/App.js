@@ -18,7 +18,7 @@ import AuthenticationPage, {
 } from "./pages/Authentication";
 import { action as logoutAction } from "./pages/Logout";
 
-import { tokenLoader } from "./util/auth";
+import { checkAuthLoader, tokenLoader } from "./util/auth";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -51,6 +51,7 @@ const router = createBrowserRouter([
                 path: "edit",
                 element: <EditEventPage />,
                 action: manipulateEventAction,
+                loader: checkAuthLoader,
               },
             ],
           },
@@ -58,6 +59,7 @@ const router = createBrowserRouter([
             path: "new",
             element: <NewEventPage />,
             action: manipulateEventAction,
+            loader: checkAuthLoader,
           },
         ],
       },
